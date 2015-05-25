@@ -1,0 +1,283 @@
+@DATABASE "SelmasMemoryGame.guide"
+@(c) "2015 Stefan Blixth, OnyxSoft"
+@$VER: "Selmas Memory Game 0.1 (06-05-15) by Stefan Blixth, OnyxSoft"
+@INDEX "Index"
+@NODE "Main" "Selmas Memory Game - Documentation"
+@NEXT "intro"
+
+ @{b}Selmas Memory Game 0.1@{ub} - © 2015 Stefan Blixth & Selma Blixth, OnyxSoft
+
+ - User Documentation -
+
+ @{" Introduction " LINK "intro"   } - What is Selmas Memory Game ?
+ @{" Requirements " LINK "req"     } - What does it need to run ?
+ @{" Installation " LINK "install" } - How to install it.
+ @{" Usage        " LINK "usage"   } - How to use the game.
+
+ @{" FAQ          " LINK "faq"     } - Frequently Asked Questions.
+
+ @{" What's new ? " LINK "news"    } - What is new in this version?
+ @{" History      " LINK "history" } - The history of this program.
+ @{" Future       " LINK "future"  } - What can we see in the crystal-ball?
+ @{" Copyrights   " LINK "copy"    } - Legal mumbo-jumbo..
+
+ @{" Author       " LINK "author"  } - Person behind this program.
+ @{" Thanks to..  " LINK "thanks"  } - My best regards to..
+
+ @{" Donations    " LINK "donate"  } - Show your support for OnyxSoft
+
+@ENDNODE
+
+@NODE "intro" "Selmas Memory Game - Introduction"
+@PREV "main"
+@NEXT "req"
+
+ @{b}@{u}Introduction@{uu}@{ub}
+
+ Why another memory game ?
+
+ My daughter wanted me to make a game for her and she had a lot of huge ideas.
+ And since I thought that it would be good for her to be part of I came up with
+ the idea to start in a little gentle way until the bigger plans will be done =)
+ 
+ This is a very simple game, but we think that it can be fun for kids to play
+ and train their memory capabilites.
+
+ That's the basic story behind this game.
+
+@ENDNODE
+
+@NODE "req" "Selmas Memory Game - Requirements"
+@PREV "intro"
+@NEXT "install"
+
+ @{b}@{u}Requirements@{uu}@{ub}
+
+ This program needs and has been tested following systems :
+
+ · MorphOS 2.x
+ · AmigaOS 4.1 with MUI4
+ · AROS (i386)
+
+@ENDNODE
+
+@NODE "install" "Selmas Memory Game - Installation"
+@PREV "req"
+@NEXT "usage"
+
+ @{b}@{u}Installation@{uu}@{ub}
+
+ No installation needed, just place it where you want and start it for some memory training
+
+@ENDNODE
+
+@NODE "usage" "Selmas Memory Game - Usage"
+@PREV "install"
+@NEXT "faq"
+
+ @{b}@{u}Usage@{uu}@{ub}
+
+ The game interface consist of a card area (6, 18 or 32 cards)
+
+ The idea is to find pairs of the same image and if they are found the
+ level gauge on the right side increas.
+ When all cards are found the game is finished.
+
+ The interface also consist of a couple of buttons 
+
+ @{b}· New Game :@{ub}
+   By pressing this game, a new fresh board will be generated.
+   The current active game will be ended.
+
+
+ @{b}· About Game :@{ub}
+   Here you see the information about the game like author and copyrights etc.
+
+
+ @{b}· Settings :@{ub}
+   By selecting this one you can adjust the size of the board where
+   Tiny   = 6 cards
+   Medium = 18 cards
+   Big    = 32 cards
+
+   Pressing the @{b}Use@{ub} button will generate a new board with the options selected.
+   Cancel will ignore the changes.
+
+
+@ENDNODE
+
+@NODE "faq" "Selmas Memory Game - FAQ"
+@PREV "usageprefs"
+@NEXT "news"
+
+@{b}@{u}FAQ - Frequently Asked Questions@{uu}@{ub}
+
+* @{b}Q = Question@{ub}
+* @{b}A = Answer@{ub}
+
+---------------------------------------------------------------------------------
+Q - Why can't I use the big board type on my computer ?
+
+A - Since the images are static at the moment the board needs a rather big
+    screen in the biggest board type. This will change in the future.
+----------------------------------------------------------------------------------
+
+
+@ENDNODE
+
+@NODE "news" "Selmas Memory Game - What's new?"
+@PREV "usage"
+@NEXT "history"
+
+ @{b}@{u}What's new@{uu}@{ub}
+ 
+ · First initial release of the game =)
+
+@ENDNODE
+
+@NODE "history" "Selmas Memory Game - History"
+@PREV "news"
+@NEXT "future"
+
+ @{b}@{u}History@{uu}@{ub}
+
+ · 05-May-2015
+
+   * First initial release of the game =)
+
+@ENDNODE
+
+@NODE "future" "Selmas Memory Game - Future"
+@PREV "history"
+@NEXT "copy"
+
+ @{b}@{u}Future@{uu}@{ub}
+
+ · External cards so it can be exhanged easy
+ · Scaleable graphics.
+ · Levels & Points
+ · More cards
+ · Game timer (to make it little more stressful)
+ · AmigaOS3 builds.
+ 
+ · ... Suggestions are welcome =)
+
+@ENDNODE
+
+@NODE "copy" "Selmas Memory Game - Copyright & Disclaimer"
+@PREV "future"
+@NEXT "author"
+
+ @{b}@{u}Copyright and Disclaimer@{uu}@{ub}
+
+ Selmas Memory Game is totally free (FreeWare) but @{"donations" LINK "donate"} are always welcome.
+ If you like the program the @{"author" LINK "author"} would be very glad if
+ you would send him an e-mail or a postcard to tell him so... ;-)
+
+ Permission is granted to make and distribute verbatim copies of this 
+ program provided the copyright notice and this permission notice are 
+ preserved on all copies.
+
+ No guarantee of any kind is given that the programs described in this 
+ document are 100% reliable. You are using this material at your own risk. 
+ The author cannot be held responsible for any damage that is caused by 
+ using this program.
+
+ This package is freely distributable, but the copyrights still apply. 
+ This means that you can copy it freely as long as you don't ask for more 
+ than a nominal copying fee.
+
+ Permission is granted to include this package in Public-Domain collections,
+ Aminet (CD's) etc. etc. The package may be uploaded to Bulletin-
+ Board-Systems or FTP servers.
+ 
+@ENDNODE
+
+@NODE "author" "Selmas Memory Game - About the author"
+@PREV "copy"
+@NEXT "thanks"
+
+ @{b}@{u}About the author@{uu}@{ub}
+
+ My name is Stefan Blixth, and I'm a programmer/electrical engineer from Karlstad, Sweden.
+
+ If you would like to contact me about this program (or any other program I've done),
+ the best way is to do so by e-mail.
+ So if you have any comments, found any bugs or have a complaint, don't hesitate to
+ use one of the following addresses :
+
+ Personal e-mail : @{b}stefan@onyxsoft.se@{ub}
+
+ If you would like to send me a postcard, my address is :
+
+ @{b}Stefan Blixth
+ Spånga 433
+ 655 94 Karlstad
+ Sweden@{ub}
+
+ If you are interested in more programs by me and/or the rest of the team.
+ You can find the complete OnyxSoft software library at the following URL :
+
+ @{b}www.onyxsoft.se@{ub}
+
+
+@ENDNODE
+
+@NODE "thanks" "Selmas Memory Game - Thanks to.."
+@PREV "author"
+@NEXT "donate"
+
+ @{b}@{u}Thanks to@{uu}@{ub}
+
+ I'd like to thank the following people/groups for making it possible for me to create this program.
+
+ Selma Blixth......................... For making the graphics and being such a wonderful daughter =)
+
+ Stefan Stuntz........................ For the superb Magic User Interface (MUI).
+
+ MorphOS Team......................... For creating the best system there is, I love it!
+
+
+@ENDNODE
+
+@NODE "donate" "Selmas Memory Game - Donations"
+@PREV "author"
+
+ @{b}@{u}Donations are welcome@{uu}@{ub}
+
+ We at OnyxSoft have been releasing freeware applications since 1995 and are still going strong
+ with the greatest enthusiasm, and ambitions for the future of the Amiga-like platform(s).
+
+ This is of course something we would like to continue to do in the future.
+ All our titles are totally free of charge without any crippled functions, etc.
+
+ We have now established a PayPal account, as many users asked us how they could donate
+ money to us (to motivate us even more, and keep the software releases "flowing").
+
+ To send us donations, please use the following e-mail : @{b}donate@onyxsoft.se@{ub}
+
+
+ Thank you for your support!
+
+
+@ENDNODE
+
+@NODE "Index" "Index of this documentation"
+
+ @{b}@{u}Index (A-Z)@{uu}@{ub}
+
+ @{" Author               " LINK "author"     }
+ @{" Copyright            " LINK "copy"       }
+ @{" Donations            " LINK "donate"     }
+ @{" FAQ                  " LINK "faq"        }
+ @{" Features             " LINK "intro"      }
+ @{" Future               " LINK "future"     }
+ @{" History              " LINK "history"    }
+ @{" Installation         " LINK "install"    }
+ @{" Introduction         " LINK "intro"      }
+ @{" Main-page            " LINK "main"       }
+ @{" Requirements         " LINK "req"        }
+ @{" Thanks to..          " LINK "thanks"     }
+ @{" Usage                " LINK "usage"      }
+ @{" What's new ?         " LINK "news"       }
+@ENDNODE
