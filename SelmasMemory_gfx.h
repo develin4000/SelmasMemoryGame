@@ -2,7 +2,7 @@
  *   Created with dt2rawimage, ©2010 Ilkka Lehtoranta
  */
 
-#include <sys/types.h>
+//#include <sys/types.h>
 
 const unsigned char card00[] =
 {

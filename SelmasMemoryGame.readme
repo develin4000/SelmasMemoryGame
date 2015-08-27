@@ -1,0 +1,33 @@
+Short:        A simple MUI-based memory game
+Author:       Stefan Blixth (stefan -at- onyxsoft -dot- se)
+Uploader:     Stefan Blixth <stefan onyxsoft se)
+Type:         util/misc
+Version:      0.1
+Architecture: i386-aros; ppc-morphos; m68k-amigaos >= 3.0.0; ppc-amigaos
+
+ 
+My daughter wanted me to make a game for her and she had a lot of huge ideas.
+And since I thought that it would be good for her to be part of I came up with
+the idea to start in a little gentle way until the bigger plans will be done =)
+ 
+This is a very simple game, but we think that it can be fun for kids to play
+and train their memory capabilites.
+
+That's the basic story behind this game.
+ 
+
+
+
+What's new (v0.1) :
+
+* First initial release of the game =)
+
+
+NOTE : This game needs MUI4 classes! (works with latest Icaros Desktop aswell)
+
+
+---
+
+For more quality software for MorphOS and AmigaOS check out :
+
+http://www.onyxsoft.se/

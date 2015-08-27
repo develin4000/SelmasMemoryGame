@@ -1,10 +1,10 @@
 #->==================================================<-
 #->= Selmas Memory Game - © Copyright 2015 OnyxSoft =<-
 #->==================================================<-
-#->= Version  : 0.1                                 =<-
+#->= Version  : 0.2                                 =<-
 #->= File     : Makefile                            =<-
 #->= Author   : Stefan Blixth                       =<-
-#->= Compiled : 2015-03-13                          =<-
+#->= Compiled : 2015-08-26                          =<-
 #->==================================================<-
 
 #
@@ -24,7 +24,7 @@ APP_AMIGAOS4_DB	= $(APP_AMIGAOS4)_db
 # Compiler tools assign
 #
 CC_MORPHOS			= ppc-morphos-gcc
-CC_AMIGAOS3			= 68k-amigaos-gcc
+CC_AMIGAOS3			= vc
 CC_AMIGAOS4			= ppc-amigaos-gcc
 CC_AROS				= i386-aros-gcc
 #CC_AROS				= i386-aros-gcc
@@ -55,10 +55,15 @@ LFLG_MOS_DB		= -ldebug -traditional-format
 OPTS_MOS_DB		= 
 OBJS_MOS_DB		= $(APPNAME)_morphos_db.o
 
-CFLG_OS3			= -noixemul
-LFLG_OS3			=
-OPTS_OS3			= -O2
-OBJS_OS3			= $(APPNAME)_amigaos3.o
+#CFLG_OS3			= -noixemul
+#LFLG_OS3			=
+#OPTS_OS3			= -O2
+#OBJS_OS3			= $(APPNAME)_amigaos3.o
+
+CFLG_OS3		= +aos68k -O2 -c99 -DNO_INLINE_STDARG
+LFLG_OS3		= +aos68k -lamiga
+OPTS_OS3		= -O2
+OBJS_OS3		= $(APPNAME)_amigaos3.o
 
 CFLG_OS4			= -D__AMIGADATE__=\"$(shell date "+%d.%m.%y")\" -D__USE_BASETYPE__ -D__USE_INLINE__ -D__USE_OLD_TIMEVAL__
 LFLG_OS4			= 
@@ -128,13 +133,27 @@ $(APP_MORPHOS):	$(SOURCE_APP)
 	$(STRIP_MORPHOS) $(EXEDIR)/$(APP_MORPHOS)
 
 
-amigaos3: $(APP_AMIGAOS3)
+#amigaos3: $(APP_AMIGAOS3)
+#	@echo ""
+#	@echo "AmigaOS3 binary sucessfully built..."
+#	@echo ""
+
+#$(APP_AMIGAOS3):  $(SOURCE_APP)
+#	$(CC_AMIGAOS3) $(SOURCE_APP) $(OPTS_OS3) $(CFLG_OS3) $(CFLG_OS3) -o $(EXEDIR)/$(APP_AMIGAOS3)
+
+amigaos3:	$(APP_AMIGAOS3)
 	@echo ""
 	@echo "AmigaOS3 binary sucessfully built..."
 	@echo ""
 
-$(APP_AMIGAOS3):  $(SOURCE_APP)
-	$(CC_AMIGAOS3) $(SOURCE_APP) $(OPTS_OS3) $(CFLG_OS3) $(CFLG_OS3) -o $(EXEDIR)/$(APP_AMIGAOS3)
+$(APP_AMIGAOS3):	$(OBJS_OS3) 
+	$(CC_AMIGAOS3) $(LFLG_OS3) -o $(EXEDIR)/$(APP_AMIGAOS3) $(OBJDIR)/$(OBJS_OS3)
+
+$(OBJS_OS3):	$(SOURCE_APP)
+	@echo ""
+	@echo "Compiling a binary for AmigaOS3..."
+	@echo ""
+	$(CC_AMIGAOS3) $(CFLG_OS3) -c $(SOURCE_APP) -o $(OBJDIR)/$(OBJS_OS3)
 
 
 amigaos4: $(APP_AMIGAOS4)

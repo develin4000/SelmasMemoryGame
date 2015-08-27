@@ -5,7 +5,7 @@
 ->= Version  : 0.1                                 =<-
 ->= File     : SelmasMemory.c                      =<-
 ->= Author   : Stefan Blixth                       =<-
-->= Compiled : 2015-05-02                          =<-
+->= Compiled : 2015-08-26                          =<-
 ->==================================================<-
 */
 
@@ -40,11 +40,16 @@ Object * VARARGS68K DoSuperNew(struct IClass *cl, Object *obj, ...)
 
 #ifdef __AROS__
  #define MUI_Requester(a,b,c,d,e) MUI_Request(a, b, 0, c, d, e, 0)
- #ifndef MUIV_Frame_Window
-   #define MUIV_Frame_Window  18
- #endif
 #else
  #define MUI_Requester(a,b,c,d,e) MUI_Request(a, b, 0, c, d, e)
+#endif
+
+#ifndef MUIV_Frame_Window
+ #define MUIV_Frame_Window  18
+#endif
+
+#ifndef MUIA_DoubleBuffer
+ #define MUIA_DoubleBuffer  0x8042a9c7
 #endif
 
 /*=*/

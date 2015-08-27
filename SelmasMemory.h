@@ -1,11 +1,11 @@
 /*
 ->==================================================<-
-->= Selmas Memory Game - Â© Copyright 2015 OnyxSoft =<-
+->= Selmas Memory Game - © Copyright 2015 OnyxSoft =<-
 ->==================================================<-
 ->= Version  : 0.1                                 =<-
 ->= File     : SelmasMemory.h                      =<-
 ->= Author   : Stefan Blixth                       =<-
-->= Compiled : 2015-05-02                          =<-
+->= Compiled : 2015-08-26                          =<-
 ->==================================================<-
 */
 
@@ -53,7 +53,7 @@
 #define REVISION  "1"
 
 #ifndef __AMIGADATE__
- #define __AMIGADATE__   "02.05.15"
+ #define __AMIGADATE__   "26.08.15"
 #endif
 
 #define DATE            __AMIGADATE__
@@ -76,7 +76,7 @@
 #define VERSTAG         "$VER:" VSTRING
 #define VERSTAG_MUI     "$VER: "VERS " ("DATE")"
 #define VERSTAG_SCREEN  VERS " ("DATE") "
-#define ABOUT           "Selmas Memory Game is a MUI-based memory game.\n\nAuthor : "AUTHOR " ("EMAIL")\nVersion : "VERSSHORT"\n\n\33c"URL"\n\n\33cÂ©Copyright "VYEARS " " COMPANY
+#define ABOUT           "Selmas Memory Game is a MUI-based memory game.\n\nAuthor : "AUTHOR " ("EMAIL")\nVersion : "VERSSHORT"\n\n\33c"URL"\n\n\33c©Copyright "VYEARS " " COMPANY
 
 
 static const char version[] = VERSTAG;
@@ -105,6 +105,8 @@ struct GfxBase       *GfxBase       = NULL;
 struct Library       *IconBase      = NULL;
 struct Library       *MUIMasterBase = NULL;
 struct IntuitionBase *IntuitionBase = NULL;
+UTILITYBASE_TYPE     *UtilityBase   = NULL;
+
 
 #ifdef __amigaos4__
 struct IntuitionIFace   *IIntuition = NULL;
