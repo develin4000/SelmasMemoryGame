@@ -1,11 +1,11 @@
 @DATABASE "SelmasMemoryGame.guide"
 @(c) "2015 Stefan Blixth, OnyxSoft"
-@$VER: "Selmas Memory Game 0.1 (26-08-15) by Stefan Blixth, OnyxSoft"
+@$VER: "Selmas Memory Game 0.2 (17-09-15) by Stefan Blixth, OnyxSoft"
 @INDEX "Index"
 @NODE "Main" "Selmas Memory Game - Documentation"
 @NEXT "intro"
 
- @{b}Selmas Memory Game 0.1@{ub} - © 2015 Stefan Blixth & Selma Blixth, OnyxSoft
+ @{b}Selmas Memory Game 0.2@{ub} - © 2015 Stefan Blixth & Selma Blixth, OnyxSoft
 
  - User Documentation -
 
@@ -123,6 +123,12 @@ A - Since the images are static at the moment the board needs a rather big
     screen in the biggest board type. This will change in the future.
 ----------------------------------------------------------------------------------
 
+---------------------------------------------------------------------------------
+Q - The program complains about not being able to load the graphics at start ?
+
+A - Since version 0.2, this game needs a drawer called gfx which contains
+    the game cards graphics, please be aware that you need this =)
+----------------------------------------------------------------------------------
 
 @ENDNODE
 
@@ -132,7 +138,7 @@ A - Since the images are static at the moment the board needs a rather big
 
  @{b}@{u}What's new@{uu}@{ub}
  
- · First initial release of the game =)
+ · Separated the card graphics and loads it externaly on start -> much smaller binary files.
 
 @ENDNODE
 
@@ -142,8 +148,13 @@ A - Since the images are static at the moment the board needs a rather big
 
  @{b}@{u}History@{uu}@{ub}
 
- · 26-Aug-2015
+ · 17-Sep-2015
+ 
+   * Separated the card graphics and loads it externaly on start -> much smaller binary files.
 
+
+ · 26-Aug-2015
+ 
    * First initial release of the game =)
 
 @ENDNODE
@@ -154,7 +165,6 @@ A - Since the images are static at the moment the board needs a rather big
 
  @{b}@{u}Future@{uu}@{ub}
 
- · External cards so it can be exhanged easy
  · Scaleable graphics.
  · Levels & Points
  · More cards

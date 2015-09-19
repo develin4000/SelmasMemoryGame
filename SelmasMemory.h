@@ -2,10 +2,10 @@
 ->==================================================<-
 ->= Selmas Memory Game - © Copyright 2015 OnyxSoft =<-
 ->==================================================<-
-->= Version  : 0.1                                 =<-
+->= Version  : 0.2                                 =<-
 ->= File     : SelmasMemory.h                      =<-
 ->= Author   : Stefan Blixth                       =<-
-->= Compiled : 2015-08-26                          =<-
+->= Compiled : 2015-09-16                          =<-
 ->==================================================<-
 */
 
@@ -22,10 +22,11 @@
  #include <clib/alib_protos.h>
 #endif
 
+#include <dos/dos.h>
+#include <proto/dos.h>
 #include <proto/intuition.h>
 #include <proto/muimaster.h>
 #include <proto/exec.h>
-//#include <proto/asl.h>
 #include <proto/graphics.h>
 #include <proto/utility.h>
 #include <proto/gadtools.h>
@@ -39,7 +40,8 @@
 #include "SDI_hook.h"
 #include "SDI_stdarg.h"
 
-#define MAX_CARDS 32 // 48 // 8*6 cards...
+#define MAX_CARDS 32
+#define NUM_CARDS 16
 
 
 #define VYEARS    "2015"
@@ -50,10 +52,10 @@
 #define COPYRIGHT "© " VYEARS " " AUTHOR ", " COMPANY
 
 #define VERSION   "0"
-#define REVISION  "1"
+#define REVISION  "2"
 
 #ifndef __AMIGADATE__
- #define __AMIGADATE__   "26.08.15"
+ #define __AMIGADATE__   "16.09.15"
 #endif
 
 #define DATE            __AMIGADATE__
@@ -101,6 +103,10 @@ static char *credits =
  #define UTILITYBASE_TYPE   struct Library
 #endif
 
+#define OPF_ENDIANCODE     0x1234
+#define OPF_BE_CODE        0x12
+#define OPF_LE_CODE        0x34
+
 struct GfxBase       *GfxBase       = NULL;
 struct Library       *IconBase      = NULL;
 struct Library       *MUIMasterBase = NULL;
@@ -118,6 +124,8 @@ struct UtilityIFace     *IUtility   = NULL;
 
 LONG __stack = 16384;
 
+struct MUI_RawimageData *cards[NUM_CARDS+1];
+
 struct CardData
 {
    WORD   position;
@@ -128,7 +136,7 @@ struct CardData
 struct Data
 {
    //BOOL   active;
-   ULONG  refrate;
+   ULONG refrate;
 
    char cardcntr;
    char current;
@@ -165,9 +173,11 @@ static char *boardsize[]= { "Tiny", "Medium", "Big", NULL };
 #define MUIM_SelectCard     (TAGBASE_DEVELIN | 0x0003)
 #define MUIM_NewGame        (TAGBASE_DEVELIN | 0x0004)
 #define MUIM_NewBoard       (TAGBASE_DEVELIN | 0x0005)
+#define MUIM_InitGame       (TAGBASE_DEVELIN | 0x0006)
 
 struct MUIP_SelectCard      { ULONG MethodID; ULONG Val; };
 
+char cardname[50];          //PROGDIR:gfx/card01.png
 
 /* IO macros */
 #define IO_SIGBIT(req)  ((LONG)(((struct IORequest *)req)->io_Message.mn_ReplyPort->mp_SigBit))
@@ -176,6 +186,7 @@ struct MUIP_SelectCard      { ULONG MethodID; ULONG Val; };
 /* Global variables... */
 static Object *app        = NULL;  // MUI-Application object
 static Object *board_obj  = NULL;  // MUI-MCC object
+static Object *win_init   = NULL;  // MUI-Window object
 static Object *win_main   = NULL;  // MUI-Window object
 static Object *win_prefs  = NULL;  // MUI-Window object
 static Object *grp_main   = NULL;
@@ -190,10 +201,12 @@ Object *but_cancel        = NULL;
 Object *cyc_boardsize     = NULL;
 //Object *cyc_gametimer     = NULL;
 Object *gau_timer         = NULL;
+Object *gau_init          = NULL;
 LONG temps                = 0;
 LONG cardnumstore         = 0;
 LONG tmpsize              = 0;
 LONG tmptimer             = 0;
+LONG initok               = 0;
 
 APTR aboutbox;
 APTR mi_about;

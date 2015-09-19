@@ -1,8 +1,9 @@
 Short:        A simple MUI-based memory game
 Author:       Stefan Blixth (stefan -at- onyxsoft -dot- se)
 Uploader:     Stefan Blixth <stefan onyxsoft se)
-Type:         util/misc
-Version:      0.1
+Type:         game/think
+Version:      0.2
+Replaces      game/think/selmasmemorygame.lha
 Architecture: i386-aros; ppc-morphos; m68k-amigaos >= 3.0.0; ppc-amigaos
 
  
@@ -18,7 +19,7 @@ That's the basic story behind this game.
 
 
 
-What's new (v0.1) :
+What's new (v0.2) :
 
 * First initial release of the game =)
 

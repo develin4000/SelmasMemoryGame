@@ -4,7 +4,7 @@
 #->= Version  : 0.2                                 =<-
 #->= File     : Makefile                            =<-
 #->= Author   : Stefan Blixth                       =<-
-#->= Compiled : 2015-08-26                          =<-
+#->= Compiled : 2015-09-16                          =<-
 #->==================================================<-
 
 #
@@ -27,7 +27,6 @@ CC_MORPHOS			= ppc-morphos-gcc
 CC_AMIGAOS3			= vc
 CC_AMIGAOS4			= ppc-amigaos-gcc
 CC_AROS				= i386-aros-gcc
-#CC_AROS				= i386-aros-gcc
 STRIP_MORPHOS		= ppc-morphos-strip
 STRIP_AMIGAOS3		=
 STRIP_AMIGAOS4		= ppc-amigaos-strip
@@ -55,22 +54,17 @@ LFLG_MOS_DB		= -ldebug -traditional-format
 OPTS_MOS_DB		= 
 OBJS_MOS_DB		= $(APPNAME)_morphos_db.o
 
-#CFLG_OS3			= -noixemul
-#LFLG_OS3			=
-#OPTS_OS3			= -O2
-#OBJS_OS3			= $(APPNAME)_amigaos3.o
-
 CFLG_OS3		= +aos68k -O2 -c99 -DNO_INLINE_STDARG
 LFLG_OS3		= +aos68k -lamiga
 OPTS_OS3		= -O2
 OBJS_OS3		= $(APPNAME)_amigaos3.o
 
-CFLG_OS4			= -D__AMIGADATE__=\"$(shell date "+%d.%m.%y")\" -D__USE_BASETYPE__ -D__USE_INLINE__ -D__USE_OLD_TIMEVAL__
+CFLG_OS4			= -D__USE_BASETYPE__ -D__USE_INLINE__ -D__USE_OLD_TIMEVAL__
 LFLG_OS4			= 
 OPTS_OS4			= -O2
 OBJS_OS4			= $(APPNAME)_amigaos4.o
 
-CFLG_OS4_DB		= -D__AMIGADATE__=\"$(shell date "+%d.%m.%y")\" -D__USE_BASETYPE__ -D__USE_INLINE__ -D__USE_OLD_TIMEVAL__ -DUSEDEBUG -g
+CFLG_OS4_DB		=  -D__USE_BASETYPE__ -D__USE_INLINE__ -D__USE_OLD_TIMEVAL__ -DUSEDEBUG -g
 LFLG_OS4_DB		= 
 OPTS_OS4_DB		= 
 OBJS_OS4_DB		= $(APPNAME)_amigaos4_db.o
@@ -132,14 +126,6 @@ $(APP_MORPHOS):	$(SOURCE_APP)
 	$(CC_MORPHOS) $(SOURCE_APP) $(OPTS_MOS) $(CFLG_MOS) $(LFLG_MOS) -o $(EXEDIR)/$(APP_MORPHOS)
 	$(STRIP_MORPHOS) $(EXEDIR)/$(APP_MORPHOS)
 
-
-#amigaos3: $(APP_AMIGAOS3)
-#	@echo ""
-#	@echo "AmigaOS3 binary sucessfully built..."
-#	@echo ""
-
-#$(APP_AMIGAOS3):  $(SOURCE_APP)
-#	$(CC_AMIGAOS3) $(SOURCE_APP) $(OPTS_OS3) $(CFLG_OS3) $(CFLG_OS3) -o $(EXEDIR)/$(APP_AMIGAOS3)
 
 amigaos3:	$(APP_AMIGAOS3)
 	@echo ""
