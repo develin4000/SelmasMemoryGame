@@ -97,15 +97,11 @@ static char *credits =
 #endif
 
 
-#if defined (__VBCC__) || defined(__AROS__) || defined(__amigaos4__)
- #define UTILITYBASE_TYPE   struct UtilityBase
-#else
+#if defined (__MORPHOS__)
  #define UTILITYBASE_TYPE   struct Library
+#else
+ #define UTILITYBASE_TYPE   struct UtilityBase
 #endif
-
-#define OPF_ENDIANCODE     0x1234
-#define OPF_BE_CODE        0x12
-#define OPF_LE_CODE        0x34
 
 struct GfxBase       *GfxBase       = NULL;
 struct Library       *IconBase      = NULL;

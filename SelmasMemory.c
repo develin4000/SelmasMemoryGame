@@ -8,14 +8,17 @@
 ->= Compiled : 2015-09-16                          =<-
 ->==================================================<-
 
-[00:20] <tokai|mdlx> Develin: you could add the header directly to your files... :)  that way you don't need to hardcode the size
-[00:23] <Develin> Yeah, good idea =)
-[00:23] <Develin> Will fix that tomorrow... need to get some sleep now
-[00:24] <tokai|mdlx> perl -e "print pack('NNCCCCN', 136, 190, 0x42, 0x5a, 0x32, 0, 12345);"   > fileheader.bin
-[00:24] <tokai|mdlx> 12345 == filesize of your bz2 file
-[00:25] <tokai|mdlx> then just: cat fileheader.bin file.bz2 > finalfilewithheader.dat
-[00:25] <tokai|mdlx> something like that
-[00:26] <tokai|mdlx> You probably could perlize the whole process into a single command line ;)
+Create card data file :
+
+Tools used : http://aminet.net/package/gfx/conv/dt2raw-1.0
+
+1) dt2raw card00.png card00.raw
+2) bzip2 card00.raw
+3) fetch size of the result -> 24230
+4) perl -e "print pack('NNCCCCN', 136, 190, 0x42, 0x5a, 0x32, 0, 24230);"   > fileheadercard00.bin
+5) cat fileheadercard00.bin card00.raw.bz2 > card00.dat
+6) Repeat the steps above for all cards needed...
+
 */
 
 #include "SelmasMemory.h"
@@ -66,44 +69,6 @@ Object * VARARGS68K DoSuperNew(struct IClass *cl, Object *obj, ...)
 
 /*=*/
 
-/*=-------------------- OPF_CheckEndian() ------------------------------------*
- * Inputs :                                                                   *
- * Return : Type of endianess (OPF_BE_CODE or OPF_LE_CODE)                    *
- *----------------------------------------------------------------------------*/
-char OPF_CheckEndian(void)
-{
-   int code = OPF_ENDIANCODE;
-   char *result = (char *)&code;
-
-   if (result[0] == OPF_BE_CODE)
-      return OPF_BE_CODE;
-   else
-      return OPF_LE_CODE;
-}
-/*=*/
-
-/*=-------------------- OPF_SwapShort() --------------------------------------*
- * Inputs : Unsigned Short value                                              *
- * Return : Endian swapped Unsigned Short value                               *
- *----------------------------------------------------------------------------*/
-unsigned short OPF_SwapShort(unsigned short value)
-{
-   unsigned char *ptr = (unsigned char*)&value;
-   return (ptr[0] << 8) | (ptr[1]);
-}
-/*=*/
-
-/*=-------------------- OPF_SwapLong() ---------------------------------------*
- * Inputs : Unsigned Long value                                               *
- * Return : Endian swapped Unsigned Long value                                *
- *----------------------------------------------------------------------------*/
-unsigned long OPF_SwapLong(unsigned long value)
-{
-   unsigned char *ptr = (unsigned char*)&value;
-   return (ptr[0] << 24) | (ptr[1] << 16) | (ptr[2] << 8) | (ptr[3]);
-}
-/*=*/
-
 /*=----------------------------- render_new() --------------------------------*
  *                                                                            *
  *----------------------------------------------------------------------------*/
@@ -140,7 +105,6 @@ static ULONG render_new(struct IClass *cl, Object *obj, struct opSet *msg)
 static ULONG render_dispose(struct IClass *cl, Object *obj, Msg msg)
 {
    int cntr = 0;
-   //struct Data *data = (struct Data *)INST_DATA(cl, obj);
    debug_print("%s : %s (%d)\n", __FILE__ , __func__, __LINE__);
    
    for(cntr = 0; cntr <= NUM_CARDS; cntr++)
@@ -231,8 +195,6 @@ static ULONG render_select(struct Data *data, struct MUIP_SelectCard *msg)
  *----------------------------------------------------------------------------*/
 static ULONG render_initgame(struct Data *data)
 {
-
-   //struct Data *data = (struct Data *)INST_DATA(cl, obj);
    int cntr = 0;
    BPTR fh;
    struct FileInfoBlock *fib;
@@ -288,90 +250,11 @@ static ULONG render_initgame(struct Data *data)
 }
 /*=*/
 
-/*=----------------------------- render_initgame() ---------------------------*
- *                                                                            *
- *----------------------------------------------------------------------------*/
-/*
-static ULONG render_initgame(struct Data *data)
-{
-   int cntr = 0;
-   Object *dto;
-   struct BitMapHeader *bmhd = NULL;
-   ULONG *gfxmethod = NULL;
-   
-   debug_print("%s : %s (%d)\n", __FILE__ , __func__, __LINE__);
-   
-   for(cntr = 0; cntr <= NUM_CARDS; cntr++)
-   {
-      sprintf(cardname, "PROGDIR:gfx/card%02d.png", cntr);
-      debug_print("%s\n", cardname);
-      set(gau_init, MUIA_Gauge_Current, cntr);
-      
-
-      dto = NewDTObject(cardname,
-                          //DTA_SourceType,        DTST_FILE,
-                          DTA_GroupID,           GID_PICTURE,
-                          PDTA_Remap,            FALSE,
-                          PDTA_DestMode,         PMODE_V43,
-                          TAG_END);
-      if (!dto)
-      {
-         debug_print("Unsupported format on the input file!\n\n");
-         return;
-      }
-      else
-      {
-         debug_print("Found following supported image file :\n\n");
-         
-         if (GetDTAttrs(dto, PDTA_BitMapHeader, &bmhd, TAG_END) == 1)
-         {
-            cards[cntr] = (struct rawimage *)AllocVecTaskPooled(sizeof(struct rawimage));
-   
-            if (cards[cntr])
-            {
-               cards[cntr]->data = AllocVecTaskPooled(bmhd->bmh_Width*bmhd->bmh_Height*4);
-               
-               cards[cntr]->width  = bmhd->bmh_Width;
-               cards[cntr]->height = bmhd->bmh_Height;
-               cards[cntr]->format = 0; //RAWIMAGE_FORMAT_RAW_RGBA_ID;
-               cards[cntr]->size = 0;
-               //cards[cntr]->size = cards[cntr]->width*cards[cntr]->height*4; // was 4
-               
-               if (cards[cntr]->data)
-               {
-                  gfxmethod = GetDTMethods(dto);
-                  
-                  if (FindMethod(gfxmethod, PDTM_READPIXELARRAY) != 0)
-                  {
-                     DoMethod (dto,PDTM_READPIXELARRAY, cards[cntr]->data, PBPAFMT_ARGB, cards[cntr]->width*4, 0, 0, cards[cntr]->width, cards[cntr]->height);
-                  }
-                  else
-                  {
-                     debug_print("\nNo method to parse data available!\n\n");
-                  }
-               }
-               else
-               {
-                  debug_print("\nError - Could not allocate memory for the image file!\n\n");
-                  FreeVecTaskPooled(cards[cntr]);
-                  cards[cntr] = NULL;
-               }
-            }
-         }
-         
-         DisposeDTObject(dto);
-      }
-   }
-}
-*/
-/*=*/
-
 /*=----------------------------- render_newgame() ----------------------------*
  *                                                                            *
  *----------------------------------------------------------------------------*/
 static ULONG render_newgame(struct Data *data)
 {
-   //struct Data *data = (struct Data *)INST_DATA(cl, obj);
    LONG cardcnt;
    int xcnt, xnum, xval, cardrand;
    char paired;
@@ -425,7 +308,7 @@ static ULONG render_newgame(struct Data *data)
 /*=----------------------------- render_newboard() ---------------------------*
  *                                                                            *
  *----------------------------------------------------------------------------*/
-static ULONG render_newboard(struct IClass *cl, Object *obj, Msg msg) //struct Data *data)
+static ULONG render_newboard(struct IClass *cl, Object *obj, Msg msg)
 {
    LONG size = 0, colsize = 3, cardnum = 6, cardcnt;
 
@@ -462,7 +345,6 @@ static ULONG render_newboard(struct IClass *cl, Object *obj, Msg msg) //struct D
       }
    }
 
-
    if(DoMethod(grp_main, MUIM_Group_InitChange)) 
    { 
       DoMethod(grp_main, OM_REMMEMBER, grp_cardboard);
@@ -470,7 +352,6 @@ static ULONG render_newboard(struct IClass *cl, Object *obj, Msg msg) //struct D
       DoMethod(grp_main, OM_ADDMEMBER, grp_cardboard); 
       DoMethod(grp_main, MUIM_Group_ExitChange); 
    }
-
 
    if(DoMethod(grp_cardboard, MUIM_Group_InitChange))
    {
@@ -502,8 +383,7 @@ static ULONG render_newboard(struct IClass *cl, Object *obj, Msg msg) //struct D
 
    set(gau_timer, MUIA_Gauge_Max, data->pairstep);
    set(gau_timer, MUIA_Gauge_Current, 0);
-   
-   //return obj;
+
    return 0;
 }
 
@@ -752,7 +632,7 @@ BOOL opengui(void)
    DoMethod(but_cancel, MUIM_Notify, MUIA_Pressed, FALSE, app, 2, MUIM_Application_ReturnID, ID_BUTTON_CANCEL);
    DoMethod(but_aboutgame, MUIM_Notify, MUIA_Pressed, FALSE, aboutbox, 3, MUIM_Set, MUIA_Window_Open, TRUE);
 
-   DoMethod(app, MUIM_Application_Load, MUIV_Application_Load_ENV);  // Was ENVARC
+   DoMethod(app, MUIM_Application_Load, MUIV_Application_Load_ENV);
    
    set(win_init, MUIA_Window_Open, TRUE);
    DoMethod(board_obj, MUIM_InitGame);
